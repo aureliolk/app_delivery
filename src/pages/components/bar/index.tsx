@@ -5,3 +5,5 @@ export function Bar(){
                 </div>
     )
 }
+
+export default Bar

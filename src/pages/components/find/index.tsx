@@ -19,3 +19,6 @@ export function Find(){
         </div>
     )
 }
+
+
+export default Find

@@ -36,4 +36,6 @@ export function ButtonSignOut({name}:ButtonProps){
     )
 }
 
+export default ButtonFill
+
 

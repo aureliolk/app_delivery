@@ -14,3 +14,6 @@ export function Logo({name}: LogoPorps){
          </Link>
     )
 }
+
+
+export default Logo

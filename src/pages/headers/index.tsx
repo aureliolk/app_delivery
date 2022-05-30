@@ -9,3 +9,5 @@ export function Headers({children}: ChildrenProps){
         </div>
     )
 }
+
+export default Headers

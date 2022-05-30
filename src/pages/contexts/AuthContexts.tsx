@@ -82,3 +82,5 @@ export function AuthProvider({children}:ChildrenProps){
         </AuthContext.Provider>
     )
 }   
+
+export default AuthProvider
