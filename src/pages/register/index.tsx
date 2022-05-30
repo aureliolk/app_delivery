@@ -1,7 +1,7 @@
 import { useForm } from "react-hook-form";
 import { Bar } from "../components/bar";
-import { Button, ButtonFill, ButtonSignOut } from "../components/buttons";
-import { Headers } from "../headers";
+import { ButtonFill, ButtonSignOut } from "../components/buttons";
+import { Headers } from "../components/headers";
 import { Logo } from "../components/logo";
 import { Menu } from "../components/menu";
 import { useContext } from "react";

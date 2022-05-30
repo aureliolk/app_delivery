@@ -22,6 +22,8 @@ type AuthContextType={
     isAuthenticated: boolean
     user: User | null
     msg: any
+    isLoading: boolean
+    setIsLoading: any
 }
 
 type ChildrenProps={
@@ -33,6 +35,9 @@ export const AuthContext = createContext({} as AuthContextType)
 export function AuthProvider({children}:ChildrenProps){
     const [msg, setMsg] = useState<any | null>("")
     const [user, setUser] = useState<User | null>(null)
+    const [isLoading, setIsLoading] = useState(false)
+
+
     const isAuthenticated = !!user;
 
     useEffect(()=>{
@@ -44,6 +49,7 @@ export function AuthProvider({children}:ChildrenProps){
     },[])
 
     async function signIn({email,password,type, name}:SignInProps){
+        setIsLoading(true)
         await fetch('/api/user', {
             method: 'POST',
             headers: {
@@ -64,9 +70,11 @@ export function AuthProvider({children}:ChildrenProps){
                 }),
                 setUser(res.user),
                 setMsg(null),
-                Router.push("/")
+                setIsLoading(false), 
+                Router.push("/login")
             )
-            setMsg(res.msg)  
+            setMsg(res.msg)
+            setIsLoading(false)  
         })
     }
 
@@ -77,7 +85,7 @@ export function AuthProvider({children}:ChildrenProps){
     }
 
     return(
-        <AuthContext.Provider value={{ isAuthenticated, setMsg, signIn, signOut, msg, user}}>
+        <AuthContext.Provider value={{ isAuthenticated, setMsg, signIn, signOut,setIsLoading,isLoading,  msg, user}}>
             {children}
         </AuthContext.Provider>
     )
