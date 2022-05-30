@@ -33,7 +33,7 @@ export default function Login() {
             <Headers>
                 <Logo name="Acos" />
                 <Menu />
-                {user ? <ButtonSignOut name="Sair" width="30%" /> : <ButtonFill name="Fazer Cadastro" link={"/register"} width="30%" />}
+                {user ? <ButtonSignOut name="Sair" /> : <ButtonFill name="Fazer Cadastro" link={"/register"}  />}
             </Headers>
             <div className="text-[12px] text-center p-4">
                 {isAuthenticated ? `Bem vindo ${user?.name}` : <h2>Use sua credencial para realizar o login</h2>}
@@ -65,7 +65,7 @@ export default function Login() {
                 <>
                     <Bar />
                     <div className="p-8 flex justify-center">
-                        <Button name="Fazer Cadastro" link="/register" width="40%" />
+                        <Button name="Fazer Cadastro" link="/register"/>
                     </div>
                 </>
             )}
