@@ -11,7 +11,7 @@ import { Logo } from "../components/logo";
 import { Menu } from "../components/menu";
 import Loading from "../components/loading";
 import {UserProps} from "../index"
-import User from "../user";
+import {ProductForm} from "../user";
 
 
 interface Inputs {
@@ -50,6 +50,7 @@ export default function Login({user}:UserProps) {
                 <h2 className="font-semibold">Bem vindo</h2> <span className="text-c_orange font-semibold">{user}</span> 
             </div>
             <Bar />
+            <ProductForm />
 
         </div>
         ):(

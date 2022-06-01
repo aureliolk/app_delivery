@@ -1,6 +1,11 @@
+// datasource db {
+//   provider = "postgresql"
+//   url      = env("DATABASE_URL")
+// }
+
 datasource db {
-  provider = "postgresql"
-  url      = env("DATABASE_URL")
+  provider = "sqlite"
+  url      = "file:./dev.db"
 }
 
 generator client {
@@ -15,5 +20,19 @@ model User {
   password   String
   
   @@map("user")
+}
+
+
+
+model Products{
+  id String @id @default(uuid())
+  createdAt DateTime @default(now())
+  name String
+  category String
+  price String
+  promotion Boolean
+  img String
+
+  @@map("product")
 }
 

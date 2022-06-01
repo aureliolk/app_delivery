@@ -84,6 +84,7 @@ export function AuthProvider({children}:ChildrenProps){
         Router.push("/login")
     }
 
+
     return(
         <AuthContext.Provider value={{ isAuthenticated, setMsg, signIn, signOut,setIsLoading,isLoading,  msg, user}}>
             {children}
