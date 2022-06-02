@@ -4,14 +4,14 @@ import jwt from 'jsonwebtoken';
 import { parseCookies } from "nookies";
 import { AuthContext } from "../contexts/AuthContexts";
 import { useContext } from "react";
-import { Button, ButtonFill, ButtonSignOut } from "../components/buttons";
+import { ButtonFill, ButtonSignOut } from "../components/buttons";
 import { Bar } from "../components/bar";
 import { Headers } from "../components/headers";
 import { Logo } from "../components/logo";
 import { Menu } from "../components/menu";
 import Loading from "../components/loading";
 import {UserProps} from "../index"
-import {ProductForm} from "../user";
+import {ProductForm} from "../product/index";
 
 
 interface Inputs {
@@ -23,7 +23,7 @@ interface Inputs {
 
 export default function Login({user}:UserProps) {
     const { register, handleSubmit } = useForm<Inputs>();
-    const { signIn, msg,isLoading,setIsLoading, isAuthenticated } = useContext(AuthContext)
+    const { signIn, msg,isLoading,setIsLoading } = useContext(AuthContext)
 
     async function onSubmit({ email, password }: Inputs) {
         if(email && password){
