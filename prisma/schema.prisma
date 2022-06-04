@@ -32,6 +32,7 @@ model Products{
   category String
   price String
   promotion Boolean
+  description String?
   img String
 
   @@map("product")

@@ -15,6 +15,14 @@ module.exports = {
             inter: ['Inter', 'sans-serif'],
             calistoga: ['Calistoga', 'sans-serif'],
         },
+        screens: {
+            'md': {
+                'max': '767px'
+            },
+            'sm': {
+                'max': '414px'
+            },
+        },
         extend: {}
     },
     plugins: [],

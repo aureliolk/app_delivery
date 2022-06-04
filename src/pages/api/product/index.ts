@@ -8,12 +8,23 @@ export default async function handler(
 ) {
     switch (req.method) {
         case "POST":
-            const { name, category, price, promotion, img } = req.body;
+            const { name, category, price, promotion, img, description, idx } = req.body;
+           
+            if(idx){
+                const findId = await prisma.products.findFirst({
+                    where:{
+                        id: idx
+                    }
+                })
+                return res.status(200).json(findId)
+            }
+            
             const data = {
                 name,
                 category,
                 price,
                 promotion,
+                description,
                 img
             }
             const addProduct = await prisma.products.create({

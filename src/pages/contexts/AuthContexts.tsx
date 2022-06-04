@@ -23,6 +23,7 @@ type AddProductProps = {
     price: string,
     promotion: boolean,
     img: string
+    description?:string
 }
 
 
@@ -128,6 +129,7 @@ export function AuthProvider({ children }: ChildrenProps) {
             const response = await fetch(endpoint, options)
             const result = await response.json()
             console.log(result)
+            setMsg("Hamburguer Adicionado!")
         } catch (error) {
             setMsg(error)
         }

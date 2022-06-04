@@ -18,9 +18,9 @@ function Home({ user }: UserProps) {
 
   return (
     <>
-      <div className="container w-[80%] m-auto">
+      <div className="w-[80%] m-auto sm:w-full">
         <Headers>
-          <Logo name="Acos" />
+          <Logo name="Acos"/>
           <Menu />
           {user ? <ButtonUserSignOut name={user} /> : <ButtonFill name="Fazer Login" link={"/login"} />}
         </Headers>
@@ -29,7 +29,7 @@ function Home({ user }: UserProps) {
       <div className="bg-[#f9f9fb]">
         <Find />
       </div>
-      <div className="container w-[80%] m-auto">
+      <div className="w-[80%] m-auto">
         <List />
       </div>
     </>

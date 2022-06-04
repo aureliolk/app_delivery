@@ -7,11 +7,11 @@ import { BiTrash } from "react-icons/bi"
 
 export function ProductForm() {
     const [img, setImageSrc] = useState<any>()
-    const { isLoading, setIsLoading, AddProduct,DeleteProduct,ListProduct,delLoading, product,idProduct } = useContext(AuthContext)
-    
-    useEffect(()=>{
+    const { isLoading, setIsLoading, AddProduct, DeleteProduct, ListProduct, setMsg, msg, delLoading, product, idProduct } = useContext(AuthContext)
+
+    useEffect(() => {
         ListProduct()
-    },[isLoading,delLoading])
+    }, [isLoading, delLoading])
 
     // OUTHER FUNCTION
     function readFile(input: any) {
@@ -29,6 +29,7 @@ export function ProductForm() {
     async function HandleSubmit(event: any) {
         event.preventDefault();
         setIsLoading(true)
+        setMsg("Adcionando o Hambuguer . . .")
         try {
             const form = event.currentTarget;
             const fileInput: any = Array.from(form.elements).find(({ name }: any) => name === 'img');
@@ -41,22 +42,23 @@ export function ProductForm() {
                 method: 'POST',
                 body: formData
             }).then(r => r.json());
-    
+
             const data = {
                 name: event.target.name.value,
                 category: event.target.category.value,
                 price: event.target.price.value,
                 promotion: true,
+                description: event.target.description.value,
                 img: imgUp.secure_url
-                // img: "mmm"
-    
             }
-            AddProduct(data)    
+            setMsg("Adcionando o Hambuguer 50%")
+            AddProduct(data)
+
         } catch (error) {
-            console.log(error)   
+            console.log(error)
         }
 
-        
+
     }
 
     return (
@@ -68,6 +70,8 @@ export function ProductForm() {
                 <input type="text" id="category" name="category" className="text-[#000] p-1 rounded" />
                 <label htmlFor="price">Preço</label>
                 <input type="text" id="price" name="price" className="text-[#000] p-1 rounded" />
+                <label htmlFor="price">Descrição</label>
+                <input type="text" id="description" name="description" className="text-[#000] p-1 rounded" placeholder="Opcional" />
                 <label >Promoçao</label>
                 <div className="flex items-center gap-2">
                     <label htmlFor="yes">Sim</label>
@@ -84,6 +88,14 @@ export function ProductForm() {
                     {isLoading ? <Loading /> : "Adicionar Produto"}
                 </button>
             </form>
+            {msg && (
+                <>
+                    <Bar />
+                    <div className="flex justify-center py-4 text-[12px]">
+                        {msg}
+                    </div>
+                </>
+            )}
             <Bar />
             <div className="flex justify-center">
                 <div className="grid grid-cols-3 mt-8 mb-8 gap-2">

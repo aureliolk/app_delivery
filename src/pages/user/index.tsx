@@ -1,3 +1,7 @@
-export default function User(){
-    return <h1>Users</h1>
+import { MatchBreakpoint } from 'react-hook-breakpoints';
+
+export default function MatchBreakpointExample() {
+  return (
+    null
+  );
 }
