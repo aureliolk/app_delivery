@@ -1,6 +1,6 @@
 module.exports = {
     content: [
-        "./src/pages/**/*.{js,ts,jsx,tsx}"
+        "./src/pages/**/*.{js,ts,jsx,tsx}",
     ],
     theme: {
         colors: {
@@ -13,7 +13,7 @@ module.exports = {
         },
         fontFamily: {
             inter: ['Inter', 'sans-serif'],
-            calistoga: ['Calistoga', 'sans-serif'],
+            calistoga: ['Calistoga', 'cursive'],
         },
         screens: {
             'md': {

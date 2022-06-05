@@ -29,9 +29,9 @@ model Products{
   id String @id @default(uuid())
   createdAt DateTime @default(now())
   name String
-  category String
+  category String? @default("Tradicionais")
   price String
-  promotion Boolean
+  promotion Boolean 
   description String?
   img String
 

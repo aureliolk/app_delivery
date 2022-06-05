@@ -7,10 +7,15 @@ import { RiShoppingBag2Line } from "react-icons/ri"
 import { FiMapPin } from "react-icons/fi"
 import { MatchBreakpoint } from "react-hook-breakpoints";
 import { useEffect, useState } from "react";
+import { Swiper, SwiperSlide } from 'swiper/react';
+import { Pagination, Autoplay } from 'swiper';
+
+import 'swiper/css';
+import 'swiper/css/pagination'
 
 
 export function Banner() {
-    const [product, setProduct] = useState<ItemProps>()
+    const [product, setProduct] = useState<ItemProps[]>()
     useEffect(() => {
         async function FindId() {
             const api = "/api/product"
@@ -20,16 +25,16 @@ export function Banner() {
                     'Content-Type': 'application/json'
                 },
                 body: JSON.stringify({
-                    idx: "43b5bb96-b08c-40b7-9c38-c878d7192ee9"
+                    category: "Combo"
                 })
             }
             const res = await fetch(api, option)
             const data = await res.json()
-            console.log(data)
             setProduct(data)
         }
         FindId()
     }, [])
+
 
 
     return (
@@ -75,25 +80,42 @@ export function Banner() {
             </MatchBreakpoint>
             <MatchBreakpoint is={"mobile"}>
                 <div className="p-6">
-                    {product && (
-                        <div className="shadow-2xl rounded  relative flex justify-between ">
-                            <div className="text-[12px] p-4">
-                                <div className="bg-c_orange text-c_white p-1 rounded font-semibold  w-[75px] text-center">{product.promotion === true && "Promoção"}</div>
-                                <div className="font-extrabold text-[34px]">{product.name}</div>
-                                <div className="text-[#6a7d8b]">{product.description}</div>
-                                <div className="text-[32px] font-extrabold text-c_orange">R$ {product.price}</div>
-                            </div>
-                            <div className="bg-[#EC8B00] flex items-center w-[100px] rounded"></div>
-                            <img src={product.img} alt={product.name + "img"} className="w-[135px] absolute top-[10%] right-0" />
-                        </div>
-                    )}
+                    <Swiper
+                        modules={[ Pagination, Autoplay]}
+                        spaceBetween={50}
+                        slidesPerView={1}
+                        autoplay={{delay:4000}}
+                        pagination={{ 
+                            type:"progressbar",
+                            progressbarOpposite:true,
+                            clickable:true,
+                            
+                         }}
+                    >
+                        {product && product.map((item: ItemProps) => {
+                            return (
+                                <SwiperSlide key={item.id}>
+                                    <div  className="rounded relative flex justify-between ">
+                                        <div className="text-[12px] p-4">
+                                            <div className="bg-c_orange text-c_white p-1 rounded font-semibold  w-[75px] text-center">{item.promotion === true && "Promoção"}</div>
+                                            <div className="font-extrabold text-[30px] tracking-tight">{item.name}</div>
+                                            <div className="text-[#6a7d8b]">{item.description}</div>
+                                            <div className="text-[32px] font-extrabold text-c_orange">R$ {item.price}</div>
+                                        </div>
+                                        <div className="bg-[#EC8B00] flex items-center w-[100px] rounded"></div>
+                                        <img src={item.img} alt={item.name + "img"} className="w-[135px] absolute top-[10%] right-0" />
+                                    </div>
+                                </SwiperSlide>
+                            )
+                        })}
+                    </Swiper>
                 </div>
             </MatchBreakpoint>
         </>
     )
 }
 
-type ItemProps = {
+export type ItemProps = {
     id: string
     name: string,
     category: string,

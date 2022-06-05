@@ -3,28 +3,26 @@ import { useContext } from "react";
 import { AuthContext } from "../../contexts/AuthContexts";
 import { AiOutlineUser } from "react-icons/ai"
 
+
+
 interface ButtonProps {
-    name: string;
-    link?: string;
+    name?: string
+    link?: string
 }
 
-export function ButtonFill({ name, link }: ButtonProps) {
+export function ButtonFill({ name }: ButtonProps) {
     return (
-        <Link href={link || "/"} >
-            <button className={`w-[240px] py-3 bg-c_orange text-[12px] text-c_lorange font-semibold rounded flex items-center justify-center cursor-pointer`}>
-                {name}
-            </button>
-        </Link>
+        <button  className={`text-[12px] w-full rounded bg-c_orange py-3 text-c_white font-semibold flex justify-center`}>
+            {name && name}
+        </button>
     )
 }
 
-export function Button({ name, link }: ButtonProps) {
+export function Button({ name,  }: ButtonProps) {
     return (
-        <Link href={link || "/"}>
-            <button className={`w-[240px] py-3 border border-c_orange text-[12px] text-c_orange font-semibold rounded flex items-center justify-center cursor-pointer`}>
-                {name}
-            </button>
-        </Link>
+        <button className={`text-[12px] w-full rounded border border-c_orange py-3 text-c_orange font-semibold flex justify-center`}>
+            {name && name}
+        </button>
     )
 }
 

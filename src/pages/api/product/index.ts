@@ -8,7 +8,21 @@ export default async function handler(
 ) {
     switch (req.method) {
         case "POST":
-            const { name, category, price, promotion, img, description, idx } = req.body;
+            var { name, category, price, promotion, img, description, idx } = req.body;
+            if(name && price && promotion && img){
+                const data = {
+                    name,
+                    category,
+                    price,
+                    promotion,
+                    description,
+                    img
+                }
+                const addProduct = await prisma.products.create({
+                    data
+                })
+                return res.json(addProduct) 
+            }
            
             if(idx){
                 const findId = await prisma.products.findFirst({
@@ -19,18 +33,16 @@ export default async function handler(
                 return res.status(200).json(findId)
             }
             
-            const data = {
-                name,
-                category,
-                price,
-                promotion,
-                description,
-                img
+            if(category){
+                const findAllCategory = await prisma.products.findMany({
+                    where:{
+                        category
+                    }
+                })
+                return res.status(200).json(findAllCategory)
             }
-            const addProduct = await prisma.products.create({
-                data
-            })
-            return res.json(addProduct)
+
+            
 
             break;
         case "GET":
@@ -38,7 +50,21 @@ export default async function handler(
             return res.json(listProduct)
 
             break;
+        case "PATCH":
+            const { idup, nameup,categoryup} = req.body;
+            const updateProduct = await prisma.products.update({
+                where:{
+                    id: idup
+                },
+                data:{
+                    name: nameup,
+                    category: categoryup,
+                }
+            })
 
+            return res.json(updateProduct)
+
+            break;
         case "DELETE":
             const {id} = req.body;
             const deleteProduct =  await prisma.products.delete({
