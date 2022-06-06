@@ -46,11 +46,7 @@ export default function Login({ user }: UserProps) {
             <MatchBreakpoint is={"desktop"}>
                 {user ? (
                     <div className=" w-[80%] m-auto">
-                        <Headers>
-                            <Logo name="Acos" />
-                            <Menu />
-                            {user ? <ButtonSignOut name="Sair" /> : <ButtonFill name="Fazer Cadastro" link={"/register"} />}
-                        </Headers>
+                        <Headers />
                         <div className="text-[13px] text-center p-4 flex justify-center gap-2">
                             <h2 className="font-semibold">Bem vindo</h2> <span className="text-c_orange font-semibold">{user}</span>
                         </div>
@@ -60,11 +56,7 @@ export default function Login({ user }: UserProps) {
                     </div>
                 ) : (
                     <div className=" w-[80%] m-auto">
-                        <Headers>
-                            <Logo name="Acos" />
-                            <Menu />
-                            {user ? <ButtonSignOut name="Sair" /> : <ButtonFill name="Fazer Cadastro" link={"/register"} />}
-                        </Headers>
+                        <Headers />
                         <div className="text-[12px] text-center p-4">
                             <h2>Use sua credencial para realizar o login</h2>
                         </div>
@@ -91,14 +83,6 @@ export default function Login({ user }: UserProps) {
                             )}
 
                         </div>
-                        {/* {!isAuthenticated && (
-                <>
-                    <Bar />
-                    <div className="p-8 flex justify-center">
-                        <Button name="Fazer Cadastro" link="/register"/>
-                    </div>
-                </>
-            )} */}
                     </div>
                 )}
             </MatchBreakpoint>
@@ -117,13 +101,7 @@ export default function Login({ user }: UserProps) {
                             <form className="flex justify-center flex-col items-center gap-6" method="GET" onSubmit={handleSubmit(onSubmit)}>
                                 <input {...register("email")} className="text-center text-[12px] bg-c_lgray w-full py-3 rounded focus:outline-c_orange" type="email" placeholder="Digite seu E-mail" />
                                 <input {...register("password")} className="text-center text-[12px] bg-c_lgray w-full py-3 rounded focus:outline-c_orange" type="password" placeholder="Digite sua Senha" />
-                                <button
-                                    className="text-[12px] w-full rounded bg-c_orange py-3 text-c_white font-semibold flex justify-center"
-                                    type="submit"
-
-                                >
-                                    {isLoading ? <Loading /> : "Entrar"}
-                                </button>
+                                <ButtonFill name="Fazer Login" />
                             </form>
                             {msg && (
                                 <div className="mt-8">
@@ -134,7 +112,7 @@ export default function Login({ user }: UserProps) {
                                 </div>
                             )}
                             <div className="my-8">
-                                <p className="text-[12px] text-center">Esqueceu sua senha? <a href="/recovery" className="text-c_orange">Clique aqui</a></p>
+                                <p className="text-[12px] text-center">Esqueceu sua senha? <Link href="/recovery" className="text-c_orange">Clique aqui</Link></p>
                             </div>
                             <Bar className="mt-8 mb-8" />
                             <div className="my-8">

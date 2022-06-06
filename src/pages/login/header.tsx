@@ -26,3 +26,5 @@ export function HeadersLogin({infor, title}:HeadersLoginProps) {
         </>
     )
 }
+
+export default HeadersLogin

@@ -8,20 +8,41 @@ import { BiFoodMenu } from 'react-icons/bi'
 import jwt from 'jsonwebtoken';
 import Find from '../find';
 import ButtonFill from '../buttons';
-import { useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import Bar from '../bar';
 import Link from 'next/link';
+import Logo from '../logo';
+import Menu from '../menu';
+import { useRouter } from 'next/router';
+import { AuthContext } from '../../contexts/AuthContexts';
 
 
 
-
-interface ChildrenProps {
-    children: any;
-    user?: string
+type HeaderProps = {
+    user?: string,
+    xxx?: string
 }
 
-export function Headers({ children, user }: ChildrenProps) {
+
+export function Headers( {user, xxx}: HeaderProps ) {
+    const {signOut} = useContext(AuthContext)
+    const [ pathUrl, setPathUrl] = useState("/login")
+    const [name, setName] = useState("Fazer Login")
     const [menu, setMenu] = useState(false)
+    const router = useRouter()
+    console.log(xxx)
+    useEffect(()=>{
+        if(document.location.pathname === "/login"){
+            setPathUrl("/register")
+            setName("Fazer Cadastro")
+            // return
+        }else if (document.location.pathname === "/register"){
+            setPathUrl("/login")
+            setName("Fazer Login")
+            // return
+            console.log("Path Register")
+        }
+    },[])
 
     function OpenMenu() {
         setMenu(true)
@@ -35,7 +56,10 @@ export function Headers({ children, user }: ChildrenProps) {
         <>
             <MatchBreakpoint is={"desktop"}>
                 <div className="h-[100px] flex justify-between items-center border-b border-b-[#c4c4c4]">
-                    {children}
+                    {user}
+                    <div className='w-[20%]'><Logo name='Acos'/></div>
+                    <div className='w-[60%]'><Menu /></div>
+                    <div className='w-[20%]'>{user ? <ButtonFill name={`${user}`} onClick={signOut}/> : <ButtonFill name={`${name}`} onClick={()=>{router.push(`${pathUrl}`)}}/> }</div>
                 </div>
             </MatchBreakpoint>
             <MatchBreakpoint is={"mobile"}>
@@ -83,20 +107,11 @@ export function Headers({ children, user }: ChildrenProps) {
 
 export default Headers
 
+
 export const getServerSideProps: GetServerSideProps = async (ctx) => {
 
-    const { 'c.token': token } = parseCookies(ctx)
-    if (!token) {
-        return {
-            props: {
-                user: false
-            }
-        }
-    }
-
-    const decode: any = jwt.verify(token, process.env.NEXT_PUBLIC_JWT_SECRET as string);
-    const user = decode.user.name
-
+    const user =  "Aurelio"
+    
     return {
         props: {
             user

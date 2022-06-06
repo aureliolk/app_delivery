@@ -81,21 +81,21 @@ export function Banner() {
             <MatchBreakpoint is={"mobile"}>
                 <div className="p-6">
                     <Swiper
-                        modules={[ Pagination, Autoplay]}
+                        modules={[Pagination, Autoplay]}
                         spaceBetween={50}
                         slidesPerView={1}
-                        autoplay={{delay:4000}}
-                        pagination={{ 
-                            type:"progressbar",
-                            progressbarOpposite:true,
-                            clickable:true,
-                            
-                         }}
+                        autoplay={{ delay: 4000 }}
+                        pagination={{
+                            type: "progressbar",
+                            progressbarOpposite: true,
+                            clickable: true,
+
+                        }}
                     >
                         {product && product.map((item: ItemProps) => {
                             return (
                                 <SwiperSlide key={item.id}>
-                                    <div  className="rounded relative flex justify-between ">
+                                    <div className="rounded relative flex justify-between ">
                                         <div className="text-[12px] p-4">
                                             <div className="bg-c_orange text-c_white p-1 rounded font-semibold  w-[75px] text-center">{item.promotion === true && "Promoção"}</div>
                                             <div className="font-extrabold text-[30px] tracking-tight">{item.name}</div>
@@ -103,7 +103,10 @@ export function Banner() {
                                             <div className="text-[32px] font-extrabold text-c_orange">R$ {item.price}</div>
                                         </div>
                                         <div className="bg-[#EC8B00] flex items-center w-[100px] rounded"></div>
-                                        <img src={item.img} alt={item.name + "img"} className="w-[135px] absolute top-[10%] right-0" />
+                                        <div className="w-[200px]" >
+                                            <Image src={`${item.img}`} alt={item.name + "img"}  layout="fill" />
+                                        </div>
+
                                     </div>
                                 </SwiperSlide>
                             )

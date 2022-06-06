@@ -1,33 +1,40 @@
 import Link from "next/link";
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import { AuthContext } from "../../contexts/AuthContexts";
 import { AiOutlineUser } from "react-icons/ai"
+import Loading from "../loading";
+
 
 
 
 interface ButtonProps {
     name?: string
-    link?: string
+    onClick?: any
 }
 
-export function ButtonFill({ name }: ButtonProps) {
+export function ButtonFill({ name,onClick }: ButtonProps) {
+    const { isLoading, signOut } = useContext(AuthContext)
+
     return (
-        <button  className={`text-[12px] w-full rounded bg-c_orange py-3 text-c_white font-semibold flex justify-center`}>
-            {name && name}
+        <button onClick={onClick} className={`text-[12px] w-full rounded bg-c_orange py-3 text-c_white font-semibold flex justify-center`}>
+            {isLoading ? <Loading /> : name}
         </button>
     )
 }
 
-export function Button({ name,  }: ButtonProps) {
+export function Button({ name,onClick }: ButtonProps) {
+    const { isLoading, signOut } = useContext(AuthContext)
+
     return (
-        <button className={`text-[12px] w-full rounded border border-c_orange py-3 text-c_orange font-semibold flex justify-center`}>
-            {name && name}
+        <button onClick={onClick} className={`text-[12px] w-full rounded border border-c_orange py-3 text-c_orange font-semibold flex justify-center`}>
+            {isLoading ? <Loading /> : name}
         </button>
     )
 }
 
 export function ButtonSignOut({ name }: ButtonProps) {
-    const { signOut } = useContext(AuthContext)
+    const { isLoading, signOut } = useContext(AuthContext)
+
     return (
         <button onClick={signOut} className={`w-[240px] py-3 border border-c_orange text-[12px] text-c_orange font-semibold rounded flex items-center justify-center cursor-pointer`}>
             {name}
@@ -44,8 +51,6 @@ export function ButtonUserSignOut({ name }: ButtonProps) {
         </Link>
     )
 }
-
-
 
 
 export default ButtonFill

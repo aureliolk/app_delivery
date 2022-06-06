@@ -2,6 +2,7 @@ import { createContext, useEffect, useState } from "react";
 import { setCookie, parseCookies, destroyCookie } from "nookies";
 import jwt from 'jsonwebtoken';
 import Router from "next/router";
+import { GetServerSideProps } from "next/types";
 const endpoint = '/api/product'
 
 
@@ -31,7 +32,7 @@ type AuthContextType = {
     signIn: (data: SignInProps) => Promise<void>
     signOut: () => void
 
-    user: User
+    user: string
 
     setMsg: (data: string) => void
     msg: any
@@ -62,23 +63,14 @@ export const AuthContext = createContext({} as AuthContextType)
 
 export function AuthProvider({ children }: ChildrenProps) {
     const [msg, setMsg] = useState<any>()
-    const [user, setUser] = useState<any>()
     const [product, setProduct] = useState<any>()
     const [isLoading, setIsLoading] = useState(false)
     const [delLoading, setDelLoading] = useState(false)
     const [idProduct, setIdProduct] = useState<string>("")
+    const [user, setUser] = useState("")
 
 
-
-    useEffect(() => {
-        const { 'c.token': token } = parseCookies()
-        if (token) {
-            const decode: any = jwt.verify(token, process.env.NEXT_PUBLIC_JWT_SECRET as string);
-            setUser(decode.user)
-        }
-    }, [])
-
-
+    //FAZER SINGIN
     async function signIn({ email, password, type, name }: SignInProps) {
         setIsLoading(true)
         await fetch('/api/user', {
@@ -99,7 +91,6 @@ export function AuthProvider({ children }: ChildrenProps) {
                     setCookie(undefined, 'c.token', res.token, {
                         maxAge: 60 * 60 * 1  //1 hour
                     }),
-                    setUser(res.user),
                     setMsg(null),
                     setIsLoading(false),
                     Router.push("/login")
@@ -109,9 +100,9 @@ export function AuthProvider({ children }: ChildrenProps) {
             })
     }
 
+    // FAZER SINGOUT
     async function signOut() {
         destroyCookie(undefined, "c.token")
-        setUser(null)
         Router.push("/login")
     }
 
@@ -180,3 +171,4 @@ export function AuthProvider({ children }: ChildrenProps) {
 }
 
 export default AuthProvider
+

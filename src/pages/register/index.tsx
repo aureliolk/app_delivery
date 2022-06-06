@@ -34,12 +34,8 @@ export default function Login() {
     }
 
     return (
-        <div className="container w-[80%] m-auto">
-            <Headers>
-                <Logo name="Acos" />
-                <Menu />
-                {user ? <ButtonSignOut name="Sair" /> : <ButtonFill name="Fazer Login" link={"/login"} />}
-            </Headers>
+        <div className="w-[80%] m-auto">
+            <Headers />
             <div className="text-[12px] text-center p-4">
                 <h2> Faça seu Cadastro </h2>
             </div>

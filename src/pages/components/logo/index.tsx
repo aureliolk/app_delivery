@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { useRouter } from "next/router";
 import { BsFillRecordFill } from "react-icons/bs";
 
 
@@ -7,12 +8,14 @@ interface LogoPorps {
     
 }
 export function Logo({ name }: LogoPorps) {
+    const router = useRouter()
+
     return (
-        <Link href={"/"}>
+        <button onClick={()=>{router.push("/")}} >
             <h1 className="font-calistoga cursor-pointer font-bold flex items-center text-[34px] gap-1 sm:text-[36px] sm:justify-center">{name}
                 <div><BsFillRecordFill color="#FB9400" size={"12px"} /></div> Burguer
             </h1>
-        </Link>
+        </button>
     )
 }
 
