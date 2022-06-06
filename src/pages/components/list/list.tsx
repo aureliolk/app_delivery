@@ -54,7 +54,9 @@ export function List() {
                         return (
                             <div key={item.id} className="shadow-xl rounded">
                                 <div className="relative bg-c_lorange flex justify-center h-[80px] rounded">
-                                    <Image src={item.img} alt={`Burguer ${item.name}`} className="w-[100px] h-[106px] absolute" />
+                                    <div className="w-[100px] h-[106px] absolute">
+                                        <Image src={item.img} alt={`Burguer ${item.name}`} layout="fill" priority={true} />
+                                    </div>
                                 </div>
                                 <div className="mt-1 p-4 flex flex-col">
                                     <div className="text-[10px]">{item.category}</div>

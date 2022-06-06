@@ -35,7 +35,9 @@ function Home({ user }: UserProps) {
         <div className="w-full">
           <Headers/>
           <Banner />
-          <List />
+          <div className='px-6 py-2'>
+            <List />
+          </div>
         </div>  
       </MatchBreakpoint>
 

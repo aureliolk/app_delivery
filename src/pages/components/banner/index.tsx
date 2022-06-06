@@ -103,8 +103,8 @@ export function Banner() {
                                             <div className="text-[32px] font-extrabold text-c_orange">R$ {item.price}</div>
                                         </div>
                                         <div className="bg-[#EC8B00] flex items-center w-[100px] rounded"></div>
-                                        <div className="w-[200px]" >
-                                            <Image src={`${item.img}`} alt={item.name + "img"}  layout="fill" />
+                                        <div className="absolute right-0 top-3" >
+                                            <Image src={`${item.img}`} alt={item.name + "img"} width={"135px"} height={"135px"} priority />
                                         </div>
 
                                     </div>
