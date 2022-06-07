@@ -14,9 +14,10 @@ CREATE TABLE "product" (
     "id" TEXT NOT NULL,
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "name" TEXT NOT NULL,
-    "category" TEXT NOT NULL,
+    "category" TEXT DEFAULT E'Tradicionais',
     "price" TEXT NOT NULL,
     "promotion" BOOLEAN NOT NULL,
+    "description" TEXT,
     "img" TEXT NOT NULL,
 
     CONSTRAINT "product_pkey" PRIMARY KEY ("id")
