@@ -36,7 +36,6 @@ export function Headers( {user}: HeaderProps ) {
             setPathUrl("/login")
             setName("Fazer Login")
             // return
-            console.log("Path Register")
         }
     },[])
 

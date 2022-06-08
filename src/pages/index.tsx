@@ -54,42 +54,15 @@ export default function Home({ user,product }: UserProps) {
 
 
 
-export const getServerSideProps: GetServerSideProps = async (ctx) => {
-  const res = await axios.get(process.env.BASE_URL+"/api/product")
-  const product = res.data
-  const { 'c.token': token } = parseCookies(ctx)
-    if (!token) {
-        return {
-            props: {
-              product
-            }
-        }
-    }
-
-    const decode: any = jwt.verify(token, process.env.NEXT_PUBLIC_JWT_SECRET as string);
-    const user = decode.user.name
-
-    return {
-        props: {
-            user,
-            product
-        }
-    }
- }
-
-// export async function getStaticProps(ctx: any) {
-    
-
-//   const res = await axios.get("http:localhost:3000/api/product")
+// export const getServerSideProps: GetServerSideProps = async (ctx) => {
+//   const res = await axios.get(process.env.BASE_URL+"/api/product")
 //   const product = res.data
-
 //   const { 'c.token': token } = parseCookies(ctx)
 //     if (!token) {
 //         return {
 //             props: {
 //               product
-//             },
-//           revalidate: 43200
+//             }
 //         }
 //     }
 
@@ -100,7 +73,33 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
 //         props: {
 //             user,
 //             product
-//         },
-//         revalidate: 43200
+//         }
 //     }
-// }
+//  }
+
+export async function getStaticProps(ctx: any) {
+
+  const res = await axios.get("http:localhost:3000/api/product")
+  const product = res.data
+
+  const { 'c.token': token } = parseCookies(ctx)
+    if (!token) {
+        return {
+            props: {
+              product
+            },
+          revalidate: 43200
+        }
+    }
+
+    const decode: any = jwt.verify(token, process.env.NEXT_PUBLIC_JWT_SECRET as string);
+    const user = decode.user.name
+
+    return {
+        props: {
+            user,
+            product
+        },
+        revalidate: 43200
+    }
+}
