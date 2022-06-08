@@ -79,7 +79,7 @@ export default function Home({ user,product }: UserProps) {
 
 export async function getStaticProps(ctx: any) {
 
-  const res = await axios.get("http:localhost:3000/api/product")
+  const res = await axios.get( process.env.BASE_URL+"/api/product")
   const product = res.data
 
   const { 'c.token': token } = parseCookies(ctx)
