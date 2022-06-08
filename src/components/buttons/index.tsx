@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { useContext, useState } from "react";
-import { AuthContext } from "../../contexts/AuthContexts";
+import { AuthContext } from "../../pages/contexts/AuthContexts";
 import { AiOutlineUser } from "react-icons/ai"
 import Loading from "../loading";
 
@@ -10,14 +10,15 @@ import Loading from "../loading";
 interface ButtonProps {
     name?: string
     onClick?: any
+    id?: string
 }
 
-export function ButtonFill({ name,onClick }: ButtonProps) {
+export function ButtonFill({ name,onClick,id }: ButtonProps) {
     const { isLoading, signOut } = useContext(AuthContext)
 
     return (
         <button onClick={onClick} className={`text-[12px] w-full rounded bg-c_orange py-3 text-c_white font-semibold flex justify-center`}>
-            {isLoading ? <Loading /> : name}
+            {isLoading && id ? <Loading /> : name}
         </button>
     )
 }

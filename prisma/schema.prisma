@@ -24,7 +24,6 @@ model User {
 }
 
 
-
 model Products{
   id String @id @default(uuid())
   createdAt DateTime @default(now())

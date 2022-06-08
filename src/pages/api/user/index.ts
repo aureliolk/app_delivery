@@ -37,14 +37,14 @@ export default async function handler(
       })
 
     }else if(type === "login"){
-      if (!email) return res.status(401).json({ msg: "Campo email está vazio!" });
-      if (!password) return res.status(401).json({ msg: "Campo password está vazio!" });
+      if (!email) return res.status(200).json({ msg: "Campo email está vazio!" });
+      if (!password) return res.status(200).json({ msg: "Campo password está vazio!" });
 
       const userEmail = await prisma.user.findUnique({ where: { email }});
-      if(!userEmail) return res.status(401).json({msg:"E-mail ou Senha não confere!"})
+      if(!userEmail) return res.status(200).json({msg:"E-mail ou Senha não confere!"})
 
       const checkEmail = await bcrypt.compare(password, userEmail.password)
-      if(!checkEmail) return res.status(401).json({msg:"E-mail ou Senha não confere!"})
+      if(!checkEmail) return res.status(200).json({msg:"E-mail ou Senha não confere!"})
 
       const user = {
         ...userEmail,

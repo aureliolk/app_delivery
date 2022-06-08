@@ -1,8 +1,8 @@
-import { createContext, useEffect, useState } from "react";
-import { setCookie, parseCookies, destroyCookie } from "nookies";
-import jwt from 'jsonwebtoken';
+import { createContext, useState } from "react";
+import { setCookie, destroyCookie } from "nookies";
 import Router from "next/router";
-import { GetServerSideProps } from "next/types";
+const axios = require("axios").default
+
 const endpoint = '/api/product'
 
 
@@ -24,7 +24,7 @@ type AddProductProps = {
     price: string,
     promotion: boolean,
     img: string
-    description?:string
+    description?: string
 }
 
 
@@ -32,7 +32,7 @@ type AuthContextType = {
     signIn: (data: SignInProps) => Promise<void>
     signOut: () => void
 
-    user: string
+    user: User | null
 
     setMsg: (data: string) => void
     msg: any
@@ -47,7 +47,7 @@ type AuthContextType = {
     DeleteProduct: (id: string) => Promise<void>
 
     idProduct: string
-    setIdProduct: (id:string)=>void
+    setIdProduct: (id: string) => void
 
     product: any
     setProduct: (data: any) => void
@@ -61,43 +61,38 @@ type ChildrenProps = {
 
 export const AuthContext = createContext({} as AuthContextType)
 
-export function AuthProvider({ children }: ChildrenProps) {
+export function AuthProvider({ children}: ChildrenProps) {
     const [msg, setMsg] = useState<any>()
     const [product, setProduct] = useState<any>()
     const [isLoading, setIsLoading] = useState(false)
     const [delLoading, setDelLoading] = useState(false)
     const [idProduct, setIdProduct] = useState<string>("")
-    const [user, setUser] = useState("")
+    const [user, setUser] = useState<User | null>(null)
 
 
     //FAZER SINGIN
     async function signIn({ email, password, type, name }: SignInProps) {
         setIsLoading(true)
-        await fetch('/api/user', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({
+        
+        if(type === "login"){
+            const res = await axios.post("/api/user", {
                 email,
                 password,
-                type,
-                name
+                type
             })
-        })
-            .then(res => res.json())
-            .then((res) => {
-                if (!res.msg) return (
-                    setCookie(undefined, 'c.token', res.token, {
-                        maxAge: 60 * 60 * 1  //1 hour
-                    }),
-                    setMsg(null),
-                    setIsLoading(false),
-                    Router.push("/login")
-                )
-                setMsg(res.msg)
+            if (res.data.msg) {
+                setMsg(res.data.msg)
                 setIsLoading(false)
+                return
+            }            
+            setCookie(undefined, 'c.token', res.data.token, {
+                maxAge: 60 * 60 * 1  //1 hour
             })
+
+            setMsg(null)
+            Router.push("/admin")
+            setIsLoading(false)
+        }
     }
 
     // FAZER SINGOUT
@@ -164,7 +159,7 @@ export function AuthProvider({ children }: ChildrenProps) {
     }
 
     return (
-        <AuthContext.Provider value={{ setMsg, signIn, signOut, setIsLoading, AddProduct, setProduct, ListProduct, DeleteProduct, setDelLoading,setIdProduct,idProduct, delLoading, product, isLoading, msg, user }}>
+        <AuthContext.Provider value={{ setMsg, signIn, signOut, setIsLoading, AddProduct, setProduct, ListProduct, DeleteProduct, setDelLoading, setIdProduct, idProduct, delLoading, product, isLoading, msg, user }}>
             {children}
         </AuthContext.Provider>
     )

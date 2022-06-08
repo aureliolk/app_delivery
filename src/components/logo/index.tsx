@@ -1,4 +1,3 @@
-import Link from "next/link";
 import { useRouter } from "next/router";
 import { BsFillRecordFill } from "react-icons/bs";
 
@@ -7,7 +6,7 @@ interface LogoPorps {
     name: string;
     
 }
-export function Logo({ name }: LogoPorps) {
+export default function Logo({ name }: LogoPorps) {
     const router = useRouter()
 
     return (
@@ -19,5 +18,3 @@ export function Logo({ name }: LogoPorps) {
     )
 }
 
-
-export default Logo

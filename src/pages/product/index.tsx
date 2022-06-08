@@ -1,6 +1,6 @@
 import { useContext, useEffect, useState } from "react"
-import Bar from "../components/bar"
-import Loading from "../components/loading"
+import Bar from "../../components/bar"
+import Loading from "../../components/loading"
 import { AuthContext } from "../contexts/AuthContexts"
 import { BiTrash } from "react-icons/bi"
 

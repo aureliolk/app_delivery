@@ -1,8 +1,6 @@
-import Link from "next/link";
 import { useRouter } from "next/router";
 import { BsArrowLeftShort } from "react-icons/bs";
-import Bar from "../components/bar";
-import Logo from "../components/logo";
+import Logo from "../../components/logo";
 
 type HeadersLoginProps = {
     infor?: string
@@ -26,5 +24,7 @@ export function HeadersLogin({infor, title}:HeadersLoginProps) {
         </>
     )
 }
+
+
 
 export default HeadersLogin

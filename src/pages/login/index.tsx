@@ -1,21 +1,14 @@
-import { GetServerSideProps } from "next";
-import { useForm } from "react-hook-form";
-import jwt from 'jsonwebtoken';
-import { parseCookies } from "nookies";
-import { AuthContext } from "../contexts/AuthContexts";
 import { useContext } from "react";
-import { Button, ButtonFill, ButtonSignOut } from "../components/buttons";
-import { Bar } from "../components/bar";
-import { Headers } from "../components/headers";
-import { Logo } from "../components/logo";
-import { Menu } from "../components/menu";
-import Loading from "../components/loading";
-import { UserProps } from "../index"
-import { ProductForm } from "../product/index";
+import { useForm } from "react-hook-form";
 import { MatchBreakpoint } from "react-hook-breakpoints";
 import Link from "next/link";
-import { BsArrowLeftShort } from "react-icons/bs"
-import { HeadersLogin } from "./header";
+
+import { AuthContext } from "../contexts/AuthContexts";
+import {Button , ButtonFill } from "../../components/buttons";
+import Bar from "../../components/bar";
+import Headers from "../../components/headers";
+import HeadersLogin from "./header";
+
 
 
 interface Inputs {
@@ -23,17 +16,15 @@ interface Inputs {
     password: string,
 };
 
-
-
-export default function Login({ user }: UserProps) {
+export default function Login({ user }: any) {
     const { register, handleSubmit } = useForm<Inputs>();
-    const { signIn, msg, isLoading, setIsLoading } = useContext(AuthContext)
+    const { signIn, msg, setIsLoading } = useContext(AuthContext)
 
     async function onSubmit({ email, password }: Inputs) {
         if (email && password) {
             setIsLoading(true)
         }
-
+        
         signIn({
             email,
             password,
@@ -44,18 +35,7 @@ export default function Login({ user }: UserProps) {
     return (
         <>
             <MatchBreakpoint is={"desktop"}>
-                {user ? (
-                    <div className=" w-[80%] m-auto">
-                        <Headers />
-                        <div className="text-[13px] text-center p-4 flex justify-center gap-2">
-                            <h2 className="font-semibold">Bem vindo</h2> <span className="text-c_orange font-semibold">{user}</span>
-                        </div>
-                        <Bar />
-                        <ProductForm />
-
-                    </div>
-                ) : (
-                    <div className=" w-[80%] m-auto">
+            <div className=" w-[80%] m-auto">
                         <Headers />
                         <div className="text-[12px] text-center p-4">
                             <h2>Use sua credencial para realizar o login</h2>
@@ -65,13 +45,9 @@ export default function Login({ user }: UserProps) {
                             <form className="flex justify-center flex-col items-center gap-6" method="GET" onSubmit={handleSubmit(onSubmit)}>
                                 <input {...register("email")} className="text-center text-[12px] bg-c_lgray w-[70%] py-3 rounded focus:outline-c_orange" type="email" placeholder="Digite seu E-mail" />
                                 <input {...register("password")} className="text-center text-[12px] bg-c_lgray w-[70%] py-3 rounded focus:outline-c_orange" type="password" placeholder="Digite sua Senha" />
-                                <button
-                                    className="text-[12px] w-[40%] rounded bg-c_orange py-3 text-c_white font-semibold flex justify-center"
-                                    type="submit"
-
-                                >
-                                    {isLoading ? <Loading /> : "Fazer Login"}
-                                </button>
+                                <div className="w-[40%]">
+                                    <ButtonFill id="Fazer Login"  name="Fazer Login"/>
+                                </div>
                             </form>
                             {msg && (
                                 <div className="mt-8">
@@ -81,21 +57,11 @@ export default function Login({ user }: UserProps) {
                                     </div>
                                 </div>
                             )}
-
                         </div>
                     </div>
-                )}
             </MatchBreakpoint>
             <MatchBreakpoint is={"mobile"}>
-                {user ? (
-                    <div className=" ">
-                        <HeadersLogin />
-                        <Bar className="my-8" />
-                        <ProductForm />
-
-                    </div>
-                ) : (
-                    <div className="p-6">
+            <div className="p-6">
                         <HeadersLogin infor="Use sua credencial para realizar o login" />
                         <div className="">
                             <form className="flex justify-center flex-col items-center gap-6" method="GET" onSubmit={handleSubmit(onSubmit)}>
@@ -120,30 +86,9 @@ export default function Login({ user }: UserProps) {
                             </div>
                         </div>
                     </div>
-                )}
             </MatchBreakpoint>
         </>
     )
 }
 
 
-export const getServerSideProps: GetServerSideProps = async (ctx) => {
-
-    const { 'c.token': token } = parseCookies(ctx)
-    if (!token) {
-        return {
-            props: {
-                user: false
-            }
-        }
-    }
-
-    const decode: any = jwt.verify(token, process.env.NEXT_PUBLIC_JWT_SECRET as string);
-    const user = decode.user.name
-
-    return {
-        props: {
-            user
-        }
-    }
-}

@@ -13,7 +13,7 @@ function MyApp({ Component, pageProps }: AppProps) {
   return (
     <>
       <MatchMediaBreakpoints breakpoints={breakpoints}>
-        <AuthProvider>
+        <AuthProvider >
           <Component {...pageProps} />
         </AuthProvider>
       </MatchMediaBreakpoints>

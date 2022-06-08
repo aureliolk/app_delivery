@@ -1,32 +1,18 @@
 import Image from "next/image"
-import { useEffect, useState } from "react"
 import { MatchBreakpoint } from "react-hook-breakpoints";
 
-import burguercard from "../../../public/Card-burger-1 1.png"
-import { ItemProps } from "../banner";
 
-export function List() {
-    const [product, setProduct] = useState<ItemProps[]>()
-    const endPoint = "/api/product"
-
-    useEffect(() => {
-        async function DataFetch() {
-            const api = "/api/product"
-            const option = {
-                method: "GET",
-                headers: {
-                    'Content-Type': 'application/json'
-                }
-            }
-            const res = await fetch(api, option)
-            const data = await res.json()
-            setProduct(data)
-        }
-        DataFetch()
-
-    }, [])
+type ItemProps = {
+    id: string
+    name: string
+    img: string
+    category: string
+    promotion: boolean
+    price: string
+}
 
 
+export function List( {product} : any) {
     return (
         <>  <MatchBreakpoint is={"desktop"}>
             <div className="py-8 grid grid-cols-3 gap-6">
@@ -75,3 +61,4 @@ export function List() {
 
 
 export default List
+

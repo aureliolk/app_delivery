@@ -1,12 +1,9 @@
 import { useForm } from "react-hook-form";
-import { Bar } from "../components/bar";
-import { ButtonFill, ButtonSignOut } from "../components/buttons";
-import { Headers } from "../components/headers";
-import { Logo } from "../components/logo";
-import { Menu } from "../components/menu";
+import { Bar } from "../../components/bar";
+import Headers from "../../components/headers";
 import { useContext } from "react";
 import { AuthContext } from "../contexts/AuthContexts";
-import Loading from "../components/loading";
+import Loading from "../../components/loading";
 
 interface Inputs {
     email: string

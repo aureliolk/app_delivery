@@ -1,37 +1,33 @@
-import { GetServerSideProps } from 'next';
-import { parseCookies } from 'nookies';
+import { useContext, useEffect, useState } from 'react';
+import { useRouter } from 'next/router';
+import { AuthContext } from '../../pages/contexts/AuthContexts';
 import { MatchBreakpoint } from 'react-hook-breakpoints';
+import Link from 'next/link';
+
 import { AiOutlineMenu, AiOutlineClose } from 'react-icons/ai'
 import { GiForkKnifeSpoon } from 'react-icons/gi'
 import { FiShoppingBag, FiHeart, FiSettings } from 'react-icons/fi'
 import { BiFoodMenu } from 'react-icons/bi'
-import jwt from 'jsonwebtoken';
+
 import Find from '../find';
-import ButtonFill from '../buttons';
-import { useContext, useEffect, useState } from 'react';
+import ButtonFill, { Button } from '../buttons';
 import Bar from '../bar';
-import Link from 'next/link';
-import Logo from '../logo';
+import Logo from "../logo";
 import Menu from '../menu';
-import { useRouter } from 'next/router';
-import { AuthContext } from '../../contexts/AuthContexts';
-
-
 
 type HeaderProps = {
-    user?: string,
-    xxx?: string
+    user? : string
 }
 
-
-export function Headers( {user, xxx}: HeaderProps ) {
+export function Headers( {user}: HeaderProps ) {
     const {signOut} = useContext(AuthContext)
     const [ pathUrl, setPathUrl] = useState("/login")
     const [name, setName] = useState("Fazer Login")
     const [menu, setMenu] = useState(false)
     const router = useRouter()
-    console.log(xxx)
-    useEffect(()=>{
+    
+    
+    useEffect(()=>{        
         if(document.location.pathname === "/login"){
             setPathUrl("/register")
             setName("Fazer Cadastro")
@@ -56,10 +52,9 @@ export function Headers( {user, xxx}: HeaderProps ) {
         <>
             <MatchBreakpoint is={"desktop"}>
                 <div className="h-[100px] flex justify-between items-center border-b border-b-[#c4c4c4]">
-                    {user}
                     <div className='w-[20%]'><Logo name='Acos'/></div>
                     <div className='w-[60%]'><Menu /></div>
-                    <div className='w-[20%]'>{user ? <ButtonFill name={`${user}`} onClick={signOut}/> : <ButtonFill name={`${name}`} onClick={()=>{router.push(`${pathUrl}`)}}/> }</div>
+                    <div className='w-[20%]'>{user ? <Button name={`Sair`} onClick={signOut}/> : <ButtonFill name={`${name}`} onClick={()=>{router.push(`${pathUrl}`)}}/> }</div>
                 </div>
             </MatchBreakpoint>
             <MatchBreakpoint is={"mobile"}>
@@ -105,16 +100,7 @@ export function Headers( {user, xxx}: HeaderProps ) {
     )
 }
 
+
 export default Headers
 
 
-export const getServerSideProps: GetServerSideProps = async (ctx) => {
-
-    const user =  "Aurelio"
-    
-    return {
-        props: {
-            user
-        }
-    }
-}

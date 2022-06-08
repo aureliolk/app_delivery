@@ -1,7 +1,7 @@
-import { Bar } from "../components/bar";
+import { Bar } from "../../components/bar";
 import { HeadersLogin } from "../login/header";
 import { useForm } from "react-hook-form";
-import ButtonFill from "../components/buttons";
+import ButtonFill from "../../components/buttons";
 import { Router, useRouter } from "next/router";
 
 type InputProps = {

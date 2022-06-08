@@ -1,6 +1,6 @@
 import Image from "next/image";
 import { ButtonFill } from "../buttons";
-import burger from "../../../public/burger-login 1.png"
+import burger from "../../public/burger-login 1.png"
 import { FcOnlineSupport } from "react-icons/fc"
 import { AiOutlineUser } from "react-icons/ai"
 import { RiShoppingBag2Line } from "react-icons/ri"
