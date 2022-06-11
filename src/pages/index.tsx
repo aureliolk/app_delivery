@@ -16,11 +16,11 @@ const axios = require("axios").default
 
 
 export type UserProps = {
-  user: string
+  firstName: string
   product: String[]
 }
 
-export default function Home({ user,product }: UserProps) {
+export default function Home({ firstName,product }: UserProps) {
   return (
     <div>
       <Head>components
@@ -28,7 +28,7 @@ export default function Home({ user,product }: UserProps) {
       </Head>
       <MatchBreakpoint is={"desktop"} >
         <div className="w-[80%] m-auto sm:w-full">
-          <Headers user={user} />
+          <Headers user={firstName} />
           <Banner />
         </div>
         <div className="bg-[#f9f9fb]">
@@ -40,7 +40,7 @@ export default function Home({ user,product }: UserProps) {
       </MatchBreakpoint>
       <MatchBreakpoint is={"mobile"} >
         <div className="w-full">
-          <Headers user={user} />
+          <Headers user={firstName} />
           <Banner />
           <div className='px-6 py-2'>
             <List product={product} />
@@ -55,7 +55,9 @@ export default function Home({ user,product }: UserProps) {
 
 
 export const getServerSideProps: GetServerSideProps = async (ctx) => {
-  const res = await axios.get(process.env.BASE_URL+"/api/product")
+  const res = await axios.post("http://localhost:3000/api/product",{
+    category: "Tradicionais"
+  })
   const product = res.data
   const { 'c.token': token } = parseCookies(ctx)
     if (!token) {
@@ -67,39 +69,14 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
     }
 
     const decode: any = jwt.verify(token, process.env.NEXT_PUBLIC_JWT_SECRET as string);
-    const user = decode.user.name
-
+    console.log(decode)
+    const firstName = decode.firstName
+    
     return {
         props: {
-            user,
+          firstName,
             product
         }
     }
  }
 
-// export async function getStaticProps(ctx: any) {
-
-//   const res = await axios.get( process.env.BASE_URL+"/api/product")
-//   const product = res.data
-
-//   const { 'c.token': token } = parseCookies(ctx)
-//     if (!token) {
-//         return {
-//             props: {
-//               product
-//             },
-//           revalidate: 43200
-//         }
-//     }
-
-//     const decode: any = jwt.verify(token, process.env.NEXT_PUBLIC_JWT_SECRET as string);
-//     const user = decode.user.name
-
-//     return {
-//         props: {
-//             user,
-//             product
-//         },
-//         revalidate: 43200
-//     }
-// }

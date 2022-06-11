@@ -8,6 +8,7 @@ import {Button , ButtonFill } from "../../components/buttons";
 import Bar from "../../components/bar";
 import Headers from "../../components/headers";
 import HeadersLogin from "./header";
+import { FormLogin } from "../../components/forms/FormLogin";
 
 
 
@@ -41,22 +42,8 @@ export default function Login({ user }: any) {
                             <h2>Use sua credencial para realizar o login</h2>
                         </div>
                         <Bar />
-                        <div className="p-8">
-                            <form className="flex justify-center flex-col items-center gap-6" method="GET" onSubmit={handleSubmit(onSubmit)}>
-                                <input {...register("email")} className="text-center text-[12px] bg-c_lgray w-[70%] py-3 rounded focus:outline-c_orange" type="email" placeholder="Digite seu E-mail" />
-                                <input {...register("password")} className="text-center text-[12px] bg-c_lgray w-[70%] py-3 rounded focus:outline-c_orange" type="password" placeholder="Digite sua Senha" />
-                                <div className="w-[40%]">
-                                    <ButtonFill id="Fazer Login"  name="Fazer Login"/>
-                                </div>
-                            </form>
-                            {msg && (
-                                <div className="mt-8">
-                                    <Bar />
-                                    <div className="flex justify-center mt-8 text-[12px]">
-                                        {msg}
-                                    </div>
-                                </div>
-                            )}
+                        <div className="p-8 w-[60%] m-auto">
+                            <FormLogin />
                         </div>
                     </div>
             </MatchBreakpoint>

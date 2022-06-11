@@ -4,12 +4,12 @@ type BarProps = {
     className?: string
 }
 
-export function Bar({className}:BarProps) {
+export function Bar({ className }: BarProps) {
     return (
         <>
             <MatchBreakpoint is={"desktop"}>
-                <div className="border-1 border-b border-b-[#c4c4c4] flex justify-center">
-                    <hr className="absolute w-[40rem] border-c_orange" />
+                <div className="w-full border-1 border-b border-b-[#c4c4c4] flex justify-center relative">
+                    <div className="w-[80%] border-1 border-b border-c_orange flex justify-center absolute"></div>
                 </div>
             </MatchBreakpoint>
             <MatchBreakpoint is={"mobile"}>

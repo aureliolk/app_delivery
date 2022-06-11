@@ -14,6 +14,7 @@ import ButtonFill, { Button } from '../buttons';
 import Bar from '../bar';
 import Logo from "../logo";
 import Menu from '../menu';
+import { User } from '../user';
 
 type HeaderProps = {
     user? : string
@@ -50,11 +51,12 @@ export function Headers( {user}: HeaderProps ) {
     return (
         <>
             <MatchBreakpoint is={"desktop"}>
-                <div className="h-[100px] flex justify-between items-center border-b border-b-[#c4c4c4]">
+                <div className="h-[100px] flex justify-between items-center ">
                     <div className='w-[20%]'><Logo name='Acos'/></div>
                     <div className='w-[60%]'><Menu /></div>
-                    <div className='w-[20%]'>{user ? <Button name={`Sair`} onClick={signOut}/> : <ButtonFill name={`${name}`} onClick={()=>{router.push(`${pathUrl}`)}}/> }</div>
+                    <div className='w-[20%]'>{user ? <User firstName={user} /> : <ButtonFill name={`${name}`} onClick={()=>{router.push(`${pathUrl}`)}}/> }</div>
                 </div>
+                <div><Bar /></div>
             </MatchBreakpoint>
             <MatchBreakpoint is={"mobile"}>
                 {menu && (

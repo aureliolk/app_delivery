@@ -60,5 +60,8 @@ export default async function handler(
       })
 
     }
+  }else if(req.method === "GET"){
+    const findAllUser = await prisma.user.findMany()
+    res.status(200).json(findAllUser)
   }
 }

@@ -11,14 +11,22 @@ interface ButtonProps {
     name?: string
     onClick?: any
     id?: string
+    type?: undefined
 }
 
-export function ButtonFill({ name,onClick,id }: ButtonProps) {
+export function ButtonFill({ name,onClick,id,type }: ButtonProps) {
     const { isLoading, signOut } = useContext(AuthContext)
 
     return (
-        <button onClick={onClick} className={`text-[12px] w-full rounded bg-c_orange py-3 text-c_white font-semibold flex justify-center`}>
+        <button type="submit" onClick={onClick} className={`text-[12px] w-full rounded bg-c_orange py-3 text-c_white font-semibold flex justify-center`}>
             {isLoading && id ? <Loading /> : name}
+        </button>
+    )
+}
+export function ButtonFillLoading() {
+    return (
+        <button className={`text-[12px] w-full rounded bg-c_orange py-3 text-c_white font-semibold flex justify-center`}>
+             <Loading /> 
         </button>
     )
 }

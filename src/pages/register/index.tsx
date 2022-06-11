@@ -1,34 +1,69 @@
 import { useForm } from "react-hook-form";
 import { Bar } from "../../components/bar";
 import Headers from "../../components/headers";
-import { useContext } from "react";
+import { useContext, useEffect, useState } from "react";
 import { AuthContext } from "../contexts/AuthContexts";
 import Loading from "../../components/loading";
 
-interface Inputs {
+import { ImEye, ImEyeBlocked } from "react-icons/im"
+import { HiOutlinePencilAlt } from "react-icons/hi"
+import { GrUpdate } from "react-icons/gr"
+import {FormSignIn} from "../../components/forms/FormSignIn";
+
+const axios = require("axios").default
+
+interface DataUser {
+    id: string
     email: string
     password: string
     checkPassword: string
-    name: string
+    firstName: string
+    lastName: string
+    admin: boolean
 };
 
-export default function Login() {
-    const { register, handleSubmit } = useForm<Inputs>();
-    const { signIn, setMsg,  msg, user,isLoading } = useContext(AuthContext)
 
-    async function onSubmit({ email, password, checkPassword,name }: Inputs) {
-        
-        if(password !== checkPassword){
-            return setMsg("As senhas não são iguais!")
-        }
 
-        signIn({
-            name,
-            email,
-            password,
-            type: "register"
+export default function Login({ users }: any) {
+    const { register, handleSubmit } = useForm<DataUser>();
+    const { setMsg, msg, isLoading, setIsLoading } = useContext(AuthContext)
+
+    const [isLoadingUpdate, setIsLoadingUpdate] = useState(false)
+    const [eyesState, setEyesState] = useState(false)
+    const [typeInput, setTypeInput] = useState("")
+    const [form, setFomr] = useState(false)
+    const [formId, setFormId] = useState("")
+
+
+    async function onSubmit(data: DataUser) {
+        setIsLoading(true)
+
+        if (!data.firstName) return setMsg("O campo primeiro nome está vazio!"), setIsLoading(false)
+        if (!data.email) return setMsg("O campo e-mail está vazio!"), setIsLoading(false)
+        if (!data.password || data.password != data.checkPassword) return setMsg("As senhas não são iguais!"), setIsLoading(false)
+
+        const signin = await axios.post("/api/user/signin", {
+            ...data,
+            checkPassword: undefined
         })
+
+        setMsg(signin.data.msg)
+        console.log(signin.data)
+        setIsLoading(false)
+        return
     }
+
+    
+    function onForm(id: string) {
+        if (form === true && id) {
+            setFormId(id)
+            setFomr(false)
+        } else if (form === false) {
+            setFormId(id)
+            setFomr(true)
+        }
+    }
+
 
     return (
         <div className="w-[80%] m-auto">
@@ -37,33 +72,20 @@ export default function Login() {
                 <h2> Faça seu Cadastro </h2>
             </div>
             <Bar />
-            <div className="p-8">
-                <form className="flex justify-center flex-col items-center gap-6" method="GET" onSubmit={handleSubmit(onSubmit)}>
-
-                    <input {...register("email")} className="text-center text-[12px] bg-c_lgray w-[70%] py-3 rounded focus:outline-c_orange" type="email" placeholder="Digite seu E-mail" />
-                    <input {...register("name")} className="text-center text-[12px] bg-c_lgray w-[70%] py-3 rounded focus:outline-c_orange" type="text" placeholder="Digite seu Nome" />
-                    <input {...register("password")} className="text-center text-[12px] bg-c_lgray w-[70%] py-3 rounded focus:outline-c_orange" type="password" placeholder="Digite sua Senha" />
-                    <input {...register("checkPassword")} className="text-center text-[12px] bg-c_lgray w-[70%] py-3 rounded focus:outline-c_orange" type="password" placeholder="Digite sua Senha" />
-                    
-                    <button
-                        className="text-[12px] w-[40%] rounded bg-c_orange py-3 text-c_white font-semibold flex justify-center"
-                        type="submit"
-                    >
-                        {isLoading ? <Loading /> : "Fazer Cadastro"}
-                    </button>
-                </form>
-                {msg && (
-                    <div className="mt-8">
-                        <Bar />
-                        <div className="flex justify-center mt-8 text-[12px]">
-                            {msg}
-                        </div>
-                    </div>
-                )}
+            <div className="py-8 w-[75%] m-auto">
+                <FormSignIn />
             </div>
-            <Bar />
         </div>
     )
 }
 
+export async function getServerSideProps() {
+    const listUsers = await axios.get(process.env.BASE_URL + "/api/user")
+    const users = listUsers.data
 
+    return {
+        props: {
+            users
+        }
+    }
+}
